@@ -6,7 +6,7 @@
 #include "queue.h"
 #include "proc.h"
 #include "thread.h"
-#include "time.h"
+#include "proc_time.h"
 #include "stats.h"
 #include "utils.h"
 #include "proc_interrupt.h"
@@ -24,7 +24,7 @@ extern struct queue * blocked;
 extern struct queue * finished;
 
 // TODO: essa é a funcao do escalonamento
-void * scheduling_thread()
+void * scheduling_thread(void *arg)
 {
     printf("%s SCHED -> Escalonador iniciando\n",event());
 

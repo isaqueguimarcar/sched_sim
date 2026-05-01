@@ -12,6 +12,7 @@
 #include "sched.h"
 #include "utils.h"
 #include "thread.h"
+#include "proc_time.h"
 
 // Número de processos
 int NPROC;

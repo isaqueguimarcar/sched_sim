@@ -8,7 +8,7 @@
 #include "queue.h"
 #include "proc.h"
 #include "utils.h"
-#include "time.h"
+#include "proc_time.h"
 #include "thread.h"
 #include "stats.h"
 
@@ -231,7 +231,7 @@ void procend(struct queue *q)
 {
     struct proc *p, *aux;
 
-    int i=0;
+    // int i=0;
 
     // for (p = q->head; p != NULL; p = p->next) 
     p = q->head; 
