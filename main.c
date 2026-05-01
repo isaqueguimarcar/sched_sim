@@ -4,6 +4,7 @@
 #include <time.h>
 #include <pthread.h>
 #include <signal.h>
+#include <stdarg.h>
 
 #include "queue.h"
 #include "proc.h"
@@ -12,6 +13,7 @@
 #include "utils.h"
 #include "thread.h"
 #include "proc_time.h"
+#include "verbose.h"
 
 // Número de processos
 int NPROC = 10;
@@ -109,9 +111,9 @@ int main (int argc, char *argv[])
     }    
     
     // Parameters
-    printf("%s MAIN - Numero de PROCESSOS %d\n", event(), NPROC);
+    vprint("%s MAIN - Numero de PROCESSOS %d\n", event(), NPROC);
     
-    printf("%s MAIN - Valor do QUANTUM: %d\n", event(), QUANTUM);
+    vprint("%s MAIN - Valor do QUANTUM: %d\n", event(), QUANTUM);
 
     // definindo o conjunto de signals que as threads dos processos irão tratar
     sigemptyset(&set); 
@@ -139,7 +141,7 @@ int main (int argc, char *argv[])
     // Iniciando a semente do random
     srand(time(NULL));
 
-    printf("%s MAIN - Iniciando filas\n", event());
+    vprint("%s MAIN - Iniciando filas\n", event());
 
     // Inicializando as filas
     ready = initqueue(ready);
@@ -147,22 +149,22 @@ int main (int argc, char *argv[])
     blocked = initqueue(blocked);
     finished = initqueue(finished);
     
-    printf("%s MAIN - Iniciando os processos\n", event());
+    vprint("%s MAIN - Iniciando os processos\n", event());
     
     // Inicia os processos, inserindo-os na fila de aptos
     // NOTE: a fila é selecionada internamente à função, a partir das variaveis globais
     proc_init();
 
-    // FIX: debug?
-    printf("%s MAIN - imprimindo fila 'ready':\n", event());
-    printqueue(ready);
+    vprint("%s MAIN - imprimindo fila 'ready':\n", event());
+    if (VERBOSE)
+        printqueue(ready);
     
     // printf("main: fila blocked:\n");
     // printqueue(blocked);
 
     // printproc(ready->head->next->next);
 
-    printf("%s MAIN - Iniciando o escalonador\n", event());
+    vprint("%s MAIN - Iniciando o escalonador\n", event());
     
     // call scheduler
     start_scheduler();

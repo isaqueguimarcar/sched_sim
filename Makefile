@@ -15,7 +15,8 @@ OBJS = build/main.o \
 	   build/utils.o \
 	   build/proc_time.o \
 	   build/thread.o \
-	   build/stats.o 
+	   build/stats.o \
+	   build/verbose.o
 
 default: fifo
 
@@ -71,6 +72,9 @@ build/thread.o: src/thread.c include/thread.h
 
 build/stats.o: src/stats.c include/stats.h
 	$(CC) $(CFLAGS) -c src/stats.c -o build/stats.o
+
+build/verbose.o: src/verbose.c include/verbose.h
+	$(CC) $(CFLAGS) -c src/verbose.c -o build/verbose.o
 
 build/fifo.o: schedulers/fifo.c include/scheduler.h
 	$(CC) $(CFLAGS) -c schedulers/fifo.c -o build/fifo.o
