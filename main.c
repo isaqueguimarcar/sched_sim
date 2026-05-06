@@ -159,8 +159,6 @@ int main (int argc, char *argv[])
     else
         srand(SEED);
                 
-    printf("SEED: %d\n", SEED);
-
     vprint("%s MAIN - Iniciando filas\n", event());
 
     // Inicializando as filas
