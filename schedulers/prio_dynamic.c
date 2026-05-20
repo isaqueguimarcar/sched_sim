@@ -15,19 +15,32 @@ struct proc * scheduler(struct proc * current)
 
     if (current != NULL)
     {
-        if (current->state == READY)
+        switch(current->state)
         {
-            current->queue = 0;
-            enqueue(ready, current);
-        }
-        else if (current->state == BLOCKED)
-        {
-            current->queue = 1;
-            enqueue(blocked, current);
-        }
-        else if (current->state == FINISHED)
-        {
-            enqueue(finished, current);
+            case READY:
+                current->queue = 1;
+
+                enqueue(ready2, current);
+
+                break;
+
+            case BLOCKED:
+
+                current->queue = 0;
+
+                enqueue(blocked, current);
+
+                break;
+
+            case FINISHED:
+
+                enqueue(finished, current);
+
+                break;
+
+            default:
+
+                printf("@@ ERRO estado processo %d\n", current->pid);
         }
     }
 
@@ -36,16 +49,29 @@ struct proc * scheduler(struct proc * current)
     if (prob < 70)
     {
         if (!isempty(ready))
+        {
             p = dequeue(ready);
+        }
         else if (!isempty(ready2))
+        {
             p = dequeue(ready2);
+        }
     }
     else
     {
         if (!isempty(ready2))
+        {
             p = dequeue(ready2);
+        }
         else if (!isempty(ready))
+        {
             p = dequeue(ready);
+        }
+    }
+
+    if (p != NULL)
+    {
+        p->state = RUNNING;
     }
 
     return p;

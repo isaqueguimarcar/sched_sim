@@ -41,6 +41,7 @@
 *.su
 *.idb
 *.pdb
+.vscode
 
 # Kernel Module Compile Results
 *.mod*
@@ -58,4 +59,6 @@ main_ljf
 main_prio_static
 main_prio_dynamic
 main_prio_dynamic_quantum
-
+estatisticas.csv
+resultados.csv
+graficos/*

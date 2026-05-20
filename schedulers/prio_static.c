@@ -12,44 +12,78 @@ extern struct queue * blocked;
 extern struct queue * finished;
 
 extern int MAX_TIME;
+extern int QUANTUM;
 
 struct proc * scheduler(struct proc * current)
 {
-    int prob;
     struct proc * selected;
+
+    int prob;
+
+    if (current != NULL)
+    {
+        switch (current->state)
+        {
+            case READY:
+                if (current->queue == 0)
+                {
+                    enqueue(ready, current);
+                }
+                else
+                {
+                    enqueue(ready2, current);
+                }
+
+                break;
+
+            case BLOCKED:
+
+                enqueue(blocked, current);
+
+                break;
+
+            case FINISHED:
+
+                enqueue(finished, current);
+
+                break;
+
+            default:
+
+                printf("@@ ERRO no estado do processo %d\n", current->pid);
+        }
+    }
+
+    if (isempty(ready) && isempty(ready2))
+    {
+        return NULL;
+    }
 
     prob = rand() % 100;
 
-    if(prob < 70)
+    if (prob < 70)
     {
-        if(!isempty(ready))
+        if (!isempty(ready))
         {
             selected = dequeue(ready);
         }
-        else if(!isempty(ready2))
-        {
-            selected = dequeue(ready2);
-        }
         else
         {
-            return NULL;
+            selected = dequeue(ready2);
         }
     }
     else
     {
-        if(!isempty(ready2))
+        if (!isempty(ready2))
         {
             selected = dequeue(ready2);
         }
-        else if(!isempty(ready))
+        else
         {
             selected = dequeue(ready);
         }
-        else
-        {
-            return NULL;
-        }
     }
+    selected->state = RUNNING;
 
     return selected;
 }
