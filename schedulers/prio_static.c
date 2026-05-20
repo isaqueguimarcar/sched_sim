@@ -1,25 +1,55 @@
 #include <stdio.h>
+#include <stdlib.h>
 
-#include "queue.h" // contem funções uteis para filas
-#include "proc.h"  // possui as funções dos processos
-#include "stats.h" // possui as funções de estatisticas 
-#include "utils.h" // possui funções uteis 
+#include "queue.h"
+#include "proc.h"
+#include "stats.h"
+#include "utils.h"
 
-// Utilizando as variáveis globais definidas no 'main'
-extern struct queue * ready;    // fila de aptos
-extern struct queue * ready2;   // segunda fila de aptos
-extern struct queue * blocked;  // fila de bloqueados
-extern struct queue * finished; // fila de finalizados
-// NOTE: essa fila de finalizados é utilizada apenas para
-// as estatisticas finais
+extern struct queue * ready;
+extern struct queue * ready2;
+extern struct queue * blocked;
+extern struct queue * finished;
 
-// variavel global que indica o tempo maximo que um processo pode executar ao todo
 extern int MAX_TIME;
 
 struct proc * scheduler(struct proc * current)
 {
-    struct proc * selected; 
+    int prob;
+    struct proc * selected;
 
-    return NULL;
+    prob = rand() % 100;
+
+    if(prob < 70)
+    {
+        if(!isempty(ready))
+        {
+            selected = dequeue(ready);
+        }
+        else if(!isempty(ready2))
+        {
+            selected = dequeue(ready2);
+        }
+        else
+        {
+            return NULL;
+        }
+    }
+    else
+    {
+        if(!isempty(ready2))
+        {
+            selected = dequeue(ready2);
+        }
+        else if(!isempty(ready))
+        {
+            selected = dequeue(ready);
+        }
+        else
+        {
+            return NULL;
+        }
+    }
+
+    return selected;
 }
-

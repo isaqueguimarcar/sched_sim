@@ -243,4 +243,3 @@ void procend(struct queue *q)
         p = aux;
     }
 }
-
