@@ -42,6 +42,10 @@
 *.idb
 *.pdb
 .vscode
+venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
 
 # Kernel Module Compile Results
 *.mod*
